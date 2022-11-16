@@ -1,0 +1,12 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "Enterspeed.ApiKey": "",
+    "Enterspeed.BaseUrl": "https://api.enterspeed.com",
+    "Contentful.DeliveryApiKey": "",
+    "Contentful.PreviewApiKey": "",
+    "Contentful.SpaceId": ""
+  }
+}
