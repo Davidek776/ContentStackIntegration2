@@ -4,5 +4,5 @@ namespace Enterspeed.Source.Contentful.CP.Services;
 
 public interface IEnterspeedConfigurationService
 {
-    EnterspeedContentfulConfiguration GetConfiguration();
+    EnterspeedContententstackConfiguration GetConfiguration();
 }

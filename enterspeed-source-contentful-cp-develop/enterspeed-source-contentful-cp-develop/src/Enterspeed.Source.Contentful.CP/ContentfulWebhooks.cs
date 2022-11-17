@@ -69,7 +69,7 @@ public class ContentfulWebhooks
         }
 
         var enterspeedEventHandler = _enterspeedEventHandlers.FirstOrDefault(x => x.CanHandle(requestData, contentfulEventName));
-
+        
         if (enterspeedEventHandler == null)
         {
             return new BadRequestObjectResult($"no handler found for event '{contentfulEventName}'");

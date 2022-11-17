@@ -5,7 +5,10 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="contentful.csharp" Version="7.2.2" />
+    <PackageReference Include="contentstack.aspnetcore" Version="1.0.0" />
     <PackageReference Include="contentstack.csharp" Version="2.9.0" />
+    <PackageReference Include="contentstack.management.csharp" Version="0.1.0" />
+    <PackageReference Include="contentstack.utils" Version="1.0.1" />
     <PackageReference Include="Enterspeed.Source.Sdk" Version="0.8.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />

@@ -5,15 +5,15 @@ namespace Enterspeed.Source.Contentful.CP.Services;
 
 public class EnterspeedConfigurationService : IEnterspeedConfigurationService
 {
-    public EnterspeedContentfulConfiguration GetConfiguration()
+    public EnterspeedContententstackConfiguration GetConfiguration()
     {
-        return new EnterspeedContentfulConfiguration
+        return new EnterspeedContententstackConfiguration
         {
             ApiKey = Environment.GetEnvironmentVariable("Enterspeed.ApiKey"),
             BaseUrl = Environment.GetEnvironmentVariable("Enterspeed.BaseUrl"),
-            ContentfulDeliveryApiKey = Environment.GetEnvironmentVariable("Contentful.DeliveryApiKey"),
-            ContentfulPreviewApiKey = Environment.GetEnvironmentVariable("Contentful.PreviewApiKey"),
-            ContentfulSpaceId = Environment.GetEnvironmentVariable("Contentful.SpaceId")
+            ContentstackApiKey = Environment.GetEnvironmentVariable("Contentstack.ApiKey"),
+            ContentstackDeliveryToken  = Environment.GetEnvironmentVariable("Contentstack.DeliveryToekn"),
+            ContentstackEnviroment = Environment.GetEnvironmentVariable("Contentstack.Environment")
         };
     }
 }
