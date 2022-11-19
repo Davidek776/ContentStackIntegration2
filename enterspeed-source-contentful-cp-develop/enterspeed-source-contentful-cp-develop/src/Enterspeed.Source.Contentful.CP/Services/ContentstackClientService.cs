@@ -16,13 +16,7 @@ public class ContentstackClientService : IContentstackClientService
 
       
         _client = new ContentstackClient(configuration.ContentstackApiKey, configuration.ContentstackDeliveryToken, configuration.ContentstackEnviroment);
-        // _client=new ContentstackClient(
-        //     string apiKey,
-        //     string deliveryToken,
-        //     string environment,
-        //     string host = null,
-        //     ContentstackRegion region = ContentstackRegion.US,
-        //     string version = null)
+       
     }
 
     public ContentstackClient GetClient()

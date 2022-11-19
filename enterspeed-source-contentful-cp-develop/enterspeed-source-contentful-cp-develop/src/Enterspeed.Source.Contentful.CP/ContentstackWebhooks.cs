@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Contentful.Core.Models.Management;
+using Contentstack.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
@@ -12,23 +14,30 @@ using Enterspeed.Source.Contentful.CP.Constants;
 using Enterspeed.Source.Contentful.CP.Exceptions;
 using Enterspeed.Source.Contentful.CP.Handlers;
 using Enterspeed.Source.Contentful.CP.Models;
+using Locale = Contentstack.Management.Core.Models.Locale;
 
 namespace Enterspeed.Source.Contentful.CP;
 
-public class ContentfulWebhooks
+public class ContentstackWebhooks
 {
     private readonly IEnumerable<IEnterspeedEventHandler> _enterspeedEventHandlers;
 
-    public ContentfulWebhooks(IEnumerable<IEnterspeedEventHandler> enterspeedEventHandlers)
+    public ContentstackWebhooks(IEnumerable<IEnterspeedEventHandler> enterspeedEventHandlers)
     {
         _enterspeedEventHandlers = enterspeedEventHandlers;
     }
 
-    [FunctionName("ContentfulWebhooks")]
+    [FunctionName("ContentstackWebhooks")]
     public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "v1")] HttpRequest req, ILogger log)
     {
         var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-        var requestData = JsonConvert.DeserializeObject<ContentfulResource>(requestBody);
+        var requestAssets = JsonConvert.DeserializeObject<AssetLibrary>(requestBody);
+        var requestLocale = JsonConvert.DeserializeObject<Locale>(requestBody);
+        
+
+       
+
+
 
         /* TODO missing
             preview
@@ -68,7 +77,7 @@ public class ContentfulWebhooks
             return new BadRequestObjectResult($"Multiple values provided for header '{WebhooksConstants.EventHeaderKey}', only one is allowed");
         }
 
-        var enterspeedEventHandler = _enterspeedEventHandlers.FirstOrDefault(x => x.CanHandle(requestData, contentfulEventName));
+        var enterspeedEventHandler = _enterspeedEventHandlers.FirstOrDefault(x => x.CanHandle(requestAssets,requestLocale, contentfulEventName));
         
         if (enterspeedEventHandler == null)
         {
@@ -77,7 +86,7 @@ public class ContentfulWebhooks
 
         try
         {
-            enterspeedEventHandler.Handle(requestData);
+            enterspeedEventHandler.Handle(requestAssets,requestLocale);
         }
         catch (EventHandlerException exception)
         {

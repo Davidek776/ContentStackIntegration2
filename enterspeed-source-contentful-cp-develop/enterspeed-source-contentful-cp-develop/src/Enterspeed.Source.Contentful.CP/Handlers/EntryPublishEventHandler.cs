@@ -12,12 +12,12 @@ namespace Enterspeed.Source.Contentful.CP.Handlers;
 
 public class EntryPublishEventHandler : IEnterspeedEventHandler
 {
-    private readonly IContentfulClientService _contentfulClientService;
+    private readonly IContentstackClientService _contentfulClientService;
     private readonly IEnterspeedPropertyService _enterspeedPropertyService;
     private readonly IEntityIdentityService _entityIdentityService;
     private readonly IEnterspeedIngestService _enterspeedIngestService;
 
-    public EntryPublishEventHandler(IContentfulClientService contentfulClientService, IEnterspeedPropertyService enterspeedPropertyService, IEntityIdentityService entityIdentityService, IEnterspeedIngestService enterspeedIngestService)
+    public EntryPublishEventHandler(IContentstackClientService contentfulClientService, IEnterspeedPropertyService enterspeedPropertyService, IEntityIdentityService entityIdentityService, IEnterspeedIngestService enterspeedIngestService)
     {
         _contentfulClientService = contentfulClientService;
         _enterspeedPropertyService = enterspeedPropertyService;

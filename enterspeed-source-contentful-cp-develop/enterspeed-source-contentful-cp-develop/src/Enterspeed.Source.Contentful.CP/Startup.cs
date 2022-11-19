@@ -26,7 +26,7 @@ public class Startup : FunctionsStartup
         builder.Services.AddSingleton<IEnterspeedIngestService, EnterspeedIngestService>();
         builder.Services.AddSingleton<IEnterspeedPropertyService, EnterspeedPropertyService>();
         builder.Services.AddSingleton<IJsonSerializer, SystemTextJsonSerializer>();
-        builder.Services.AddSingleton<IContentfulClientService, ContentfulClientService>();
+        builder.Services.AddSingleton<IContentstackClientService, ContentstackClientService>();
         builder.Services.AddSingleton<IEntityIdentityService, EntityIdentityService>();
         builder.Services.AddSingleton<IContentfulFieldFactory, ContentfulFieldFactory>();
 

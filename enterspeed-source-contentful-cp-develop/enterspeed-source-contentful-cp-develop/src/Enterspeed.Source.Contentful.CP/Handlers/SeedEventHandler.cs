@@ -4,6 +4,8 @@ using Contentful.Core;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
 using Contentstack.Core;
+using Contentstack.Core.Models;
+using Contentstack.Management.Core.Models;
 using Enterspeed.Source.Contentful.CP.Constants;
 using Enterspeed.Source.Contentful.CP.Models;
 using Enterspeed.Source.Contentful.CP.Services;
@@ -22,17 +24,17 @@ public class SeedEventHandler : IEnterspeedEventHandler
         _enterspeedEventHandlers = enterspeedEventHandlers;
     }
 
-    public bool CanHandle(S resource, string eventType)
+    public bool CanHandle(AssetLibrary assetResource, Locale localeResource, string eventType)
     {
         return eventType == WebhooksConstants.Events.Seed;
     }
 
-    public void Handle(Contentstack.Management.Core.Models.Asset resource)
+    public void Handle(AssetLibrary assetResource,Locale localeResource)
     {
         var client = _contentstackClientService.GetClient();
         // Source
         // HandleEntries(client);
-        HandleAssets(client);
+        HandleAssets(assetResource, localeResource);
     }
 
     private async void HandleEntries(ContentfulClient client)
@@ -44,20 +46,20 @@ public class SeedEventHandler : IEnterspeedEventHandler
     
         foreach (var entry in entries)
         {
-            entryPublishEventHandler.Handle(entry);
+            // entryPublishEventHandler.Handle(entry);
         }
     }
 
-    private async void HandleAssets(ContentstackClient client)
+    private async void HandleAssets(AssetLibrary assetResource,Locale localeResource)
     {
         var assetQueryBuilder = QueryBuilder<Asset>.New;
-        var assets = await client.get(assetQueryBuilder);
+        var assets = await assetResource.FetchAll();
 
         var assetPublishEventHandler = _enterspeedEventHandlers.First(x => x.GetType() == typeof(AssetPublishEventHandler));
 
-        foreach (var asset in assets)
-        {
-            assetPublishEventHandler.Handle(asset);
-        }
+        // foreach (var asset in assets)
+        // {
+            assetPublishEventHandler.Handle(assets,localeResource);
+        // }
     }
 }

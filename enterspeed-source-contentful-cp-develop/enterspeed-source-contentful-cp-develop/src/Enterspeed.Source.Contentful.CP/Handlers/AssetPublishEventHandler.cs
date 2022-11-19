@@ -1,21 +1,24 @@
 ﻿using Contentful.Core.Models;
 using Contentful.Core.Search;
+using Contentstack.Core.Models;
+using Contentstack.Management.Core.Models;
 using Enterspeed.Source.Contentful.CP.Constants;
 using Enterspeed.Source.Contentful.CP.Exceptions;
 using Enterspeed.Source.Contentful.CP.Models;
 using Enterspeed.Source.Contentful.CP.Services;
 using Enterspeed.Source.Sdk.Api.Services;
+using Asset = Contentful.Core.Models.Asset;
 
 namespace Enterspeed.Source.Contentful.CP.Handlers;
 
 public class AssetPublishEventHandler : IEnterspeedEventHandler
 {
-    private readonly IContentfulClientService _contentfulClientService;
+    private readonly IContentstackClientService _contentfulClientService;
     private readonly IEnterspeedPropertyService _enterspeedPropertyService;
     private readonly IEntityIdentityService _entityIdentityService;
     private readonly IEnterspeedIngestService _enterspeedIngestService;
 
-    public AssetPublishEventHandler(IContentfulClientService contentfulClientService, IEnterspeedPropertyService enterspeedPropertyService, IEntityIdentityService entityIdentityService, IEnterspeedIngestService enterspeedIngestService)
+    public AssetPublishEventHandler(IContentstackClientService contentfulClientService, IEnterspeedPropertyService enterspeedPropertyService, IEntityIdentityService entityIdentityService, IEnterspeedIngestService enterspeedIngestService)
     {
         _contentfulClientService = contentfulClientService;
         _enterspeedPropertyService = enterspeedPropertyService;
@@ -23,22 +26,20 @@ public class AssetPublishEventHandler : IEnterspeedEventHandler
         _enterspeedIngestService = enterspeedIngestService;
     }
 
-    public bool CanHandle(IContentfulResource resource, string eventType)
+    public bool CanHandle(AssetLibrary assetResource, string eventType)
     {
-        return resource?.SystemProperties?.Type == WebhooksConstants.Types.Asset
-               && !string.IsNullOrWhiteSpace(resource?.SystemProperties?.Id) 
-               && eventType == WebhooksConstants.Events.AssetPublish;
+        // to do conditions
+        return eventType == WebhooksConstants.Events.AssetPublish;
     }
 
-    public async void Handle(IContentfulResource resource)
+    public async void Handle(AssetLibrary assetResource,Locale locale)
     {
         var client = _contentfulClientService.GetClient();
-        var locales = await client.GetLocales();
+        
 
-        foreach (var locale in locales)
-        {
-            var queryBuilder = QueryBuilder<Asset>.New.LocaleIs(locale.Code);
-            var asset = await client.GetAsset(resource.SystemProperties.Id, queryBuilder);
+        // Don't know how to continue with passing locale argument
+            var queryBuilder = QueryBuilder<Asset>.New.LocaleIs(locale);
+          
 
             var entity = new EnterspeedEntity(asset, locale, _enterspeedPropertyService, _entityIdentityService);
 
@@ -50,6 +51,6 @@ public class AssetPublishEventHandler : IEnterspeedEventHandler
                     : saveResponse.Message;
                 throw new EventHandlerException($"Failed ingesting entity ({entity.Id}). Message: {message}");
             }
-        }
+        
     }
 }
