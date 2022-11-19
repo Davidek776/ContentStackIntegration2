@@ -59,7 +59,7 @@ public class SeedEventHandler : IEnterspeedEventHandler
 
         // foreach (var asset in assets)
         // {
-            assetPublishEventHandler.Handle(assets,localeResource);
+            assetPublishEventHandler.Handle(assetResource,localeResource);
         // }
     }
 }

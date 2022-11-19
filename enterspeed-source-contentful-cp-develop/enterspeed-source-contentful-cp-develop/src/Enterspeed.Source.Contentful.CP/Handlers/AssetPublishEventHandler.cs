@@ -41,7 +41,7 @@ public class AssetPublishEventHandler : IEnterspeedEventHandler
             var queryBuilder = QueryBuilder<Asset>.New.LocaleIs(locale);
           
 
-            var entity = new EnterspeedEntity(asset, locale, _enterspeedPropertyService, _entityIdentityService);
+            var entity = new EnterspeedEntity(assetResource, locale, _enterspeedPropertyService, _entityIdentityService);
 
             var saveResponse = _enterspeedIngestService.Save(entity);
             if (!saveResponse.Success)
