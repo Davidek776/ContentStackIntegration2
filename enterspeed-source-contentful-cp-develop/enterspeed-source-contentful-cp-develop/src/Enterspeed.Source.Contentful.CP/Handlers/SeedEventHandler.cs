@@ -24,6 +24,7 @@ public class SeedEventHandler : IEnterspeedEventHandler
         _enterspeedEventHandlers = enterspeedEventHandlers;
     }
 
+    // As you can see my idea was to seperate Assets, Entries and Locale because they were not inside ContentstackClient 
     public bool CanHandle(AssetLibrary assetResource, Locale localeResource, string eventType)
     {
         return eventType == WebhooksConstants.Events.Seed;
@@ -50,9 +51,10 @@ public class SeedEventHandler : IEnterspeedEventHandler
         }
     }
 
+    // I have focused only on Assets for now
     private async void HandleAssets(AssetLibrary assetResource,Locale localeResource)
     {
-        var assetQueryBuilder = QueryBuilder<Asset>.New;
+        var assetQueryBuilder = QueryBuilder<Asset>.New; //this Query should be also substitude
         var assets = await assetResource.FetchAll();
 
         var assetPublishEventHandler = _enterspeedEventHandlers.First(x => x.GetType() == typeof(AssetPublishEventHandler));

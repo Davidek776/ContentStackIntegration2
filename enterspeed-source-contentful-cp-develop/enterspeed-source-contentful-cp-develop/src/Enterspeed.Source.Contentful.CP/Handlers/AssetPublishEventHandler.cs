@@ -37,7 +37,7 @@ public class AssetPublishEventHandler : IEnterspeedEventHandler
         var client = _contentfulClientService.GetClient();
         
 
-        // Don't know how to continue with passing locale argument
+        // Don't know how to continue with passing locale argument to queryBuilder
             var queryBuilder = QueryBuilder<Asset>.New.LocaleIs(locale);
           
 
